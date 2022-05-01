@@ -1,0 +1,101 @@
+/* Query 1 */
+
+SELECT t3.Country , t2.total_spent,t3.first_name,t3.last_name,t3.custemer_id
+FROM	(SELECT Country,MAX(TotalSpent) Total_spent
+	FROM
+	(SELECT i.BillingCountry Country, SUM(Total) TotalSpent, c.FirstName           first_name, c.LastName last_name, c.CustomerId custemer_id
+		FROM Customer c
+		JOIN Invoice i
+		ON c.CustomerId = i.CustomerId
+		GROUP BY 1,3,4,5
+		ORDER BY 2)t1
+	GROUP BY 1)t2
+JOIN 
+	(SELECT i.BillingCountry Country, SUM(Total) TotalSpent, c.FirstName           first_name, c.LastName last_name, c.CustomerId custemer_id
+	FROM Customer c
+	JOIN Invoice i
+	ON c.CustomerId = i.CustomerId
+	GROUP BY 1,3,4,5
+	ORDER BY 2)t3
+
+ON t2.Country = t3.Country AND t2.total_spent = t3.TotalSpent
+
+
+
+
+
+/* Query 2 */
+SELECT t3.Country, t3.Genre_name, t2.purchase
+FROM
+(SELECT Country, MAX(Quantity) purchase
+FROM(  
+  SELECT g.name Genre_name,i.BillingCountry Country,SUM(il.Quantity) Quantity
+  FROM Customer c
+  JOIN Invoice i
+  ON c.CustomerId = i.CustomerId
+  JOIN InvoiceLine il
+  ON i.InvoiceId = il.InvoiceId
+  JOIN Track t
+  ON t.TrackId = il.TrackId
+  JOIN Genre g 
+  ON g.GenreId = t.GenreId
+  GROUP BY 1,2
+) t1
+GROUP BY 1
+ORDER BY 2)t2
+JOIN(
+  SELECT g.name Genre_name,i.BillingCountry Country,SUM(il.Quantity) Quantity
+  FROM Customer c
+  JOIN Invoice i
+  ON c.CustomerId = i.CustomerId
+  JOIN InvoiceLine il
+  ON i.InvoiceId = il.InvoiceId
+  JOIN Track t
+  ON t.TrackId = il.TrackId
+  JOIN Genre g 
+  ON g.GenreId = t.GenreId
+  GROUP BY 1,2)t3
+ON t2.Country = t3.Country AND t2.purchase = t3.Quantity
+
+
+
+
+
+
+
+
+
+/* Query 3 */
+
+SELECT a.name ArtistName,g.name Genre_name, COUNT(*)
+FROM Artist a
+JOIN Album al
+ON a.ArtistId = al.ArtistId
+JOIN Track t
+ON al.AlbumId = t.AlbumId
+JOIN Genre g
+ON g.GenreId = t.GenreId
+WHERE g.name = 'Rock'
+GROUP BY 1,2
+ORDER BY 3 DESC
+LIMIT 10;
+
+
+
+
+
+
+
+
+
+
+
+
+/* Query 4 */
+
+SELECT g.name Genre_name, COUNT(*)
+FROM Genre g
+JOIN Track t
+ON g.GenreId = t.GenreId
+GROUP BY 1
+ORDER BY 2 DESC

@@ -1,0 +1,34 @@
+DATASET :
+The dataset has been taken from the Canada Government official website link is given below.
+https://open.canada.ca/data/en/dataset/98f1a129-f628-4ce4-b24d-6f16bf24dd64#wb-auto-6
+
+This dataset contains official CO2 emissions data for various car of different features over the period of 2014 to 2020. It has 7385 samples and total 11 features.
+There are few abbreviations that has been used in this data for different features. The abbreviations are listed below :
+
+1. Model :
+4WD/4X4 = Four-wheel drive
+AWD = All-wheel drive
+FFV = Flexible-fuel vehicle
+SWB = Short wheelbase
+LWB = Long wheelbase
+EWB = Extended wheelbase
+
+
+2. Transmission :
+A = automatic
+AM = automated manual
+AS = automatic with select shift
+AV = continuously variable
+M = manual
+
+
+3. Fuel type :
+X = regular gasoline
+Z = premium gasoline
+D = diesel
+E = ethanol (E85)
+N = natural gas
+
+
+4. Fuel consumption :
+City and highway fuel consumption ratings are shown in litres per 100 kilometres (L/100 km) - the combined rating (55% city, 45% hwy) is shown in L/100 km and in miles per imperial gallon (mpg)
